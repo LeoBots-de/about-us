@@ -8,7 +8,7 @@ export class Presentation{
     constructor(isLooped=false){
         this.content = document.querySelector('.slides');
         this.slides = this.content.querySelectorAll('section');
-        this.currentSlideNo=1;
+        this.currentSlideNo=0;
         if (getCookie('currentSlideNo')!=''){
             this.currentSlideNo = Number(getCookie('currentSlideNo'));
         }
