@@ -83,7 +83,7 @@ export class Presentation{
         this.intervalTimer = window.setInterval(() => {
                 self.moveToRightSlide();
             }, 
-            4000
+            5000
         );
     }
 
