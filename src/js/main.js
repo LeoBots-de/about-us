@@ -1,9 +1,5 @@
-import Reveal from 'reveal.js';
+import { Presentation } from './presentation';
 
-let deck = new Reveal({
-    plugins: [ ]
-});
-deck.initialize({
-    //width: 1920,
-    //height: 1080,
-});
+let presentation = new Presentation();
+
+presentation.update();
