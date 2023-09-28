@@ -22,7 +22,6 @@ export class TouchHelper{
                //just one finger touched
                var touch = event.touches.item(0);
                self.start = [touch.clientX, touch.clientY];
-               console.log(self.start);
              }else{
                //a second finger hit the screen, abort the touch
                self.start = null;
@@ -41,8 +40,6 @@ export class TouchHelper{
               //the only finger that hit the screen left it
               var touch = event.changedTouches.item(0);
               var end = [touch.clientX, touch.clientY];
-              console.log(end);
-              console.log(`Test: ${offsetX}, ${offsetY}`);
         
               if(end[0] - self.start[0] >  offsetX){
                 //a left -> right swipe
