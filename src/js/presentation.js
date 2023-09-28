@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from './cookie.js';
 import { fullScreenMode, normalScreenMode } from './screen.js';
+import {TouchHelper} from './touch.js';
 
 
 export class Presentation{
@@ -18,7 +19,10 @@ export class Presentation{
         this.updateCurrentSlide();
         this.currentSlide.classList.add('show');
         this.intervalTimer = null;
-        this.addKeylistener(this);
+
+        this.listener = {};
+        this.addKeyListener(this);
+        this.addTouchListener(this);
     }
 
     updateCurrentSlide() {
@@ -98,7 +102,15 @@ export class Presentation{
     }
 
 
-    addKeylistener(self) {
+    addTouchListener(self){
+        this.listener['touch'] = new TouchHelper(
+            ()=>{self.moveToRightSlide();},
+            ()=>{self.moveToLeftSlide();}
+        );
+    }
+
+
+    addKeyListener(self) {
         document.addEventListener('keydown', function(event){
             let presentation = self;
             //console.log(event.code);
