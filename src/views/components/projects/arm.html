@@ -6,51 +6,29 @@
     <div class="footer"></div>
 </section>
 
+
 <section class="slide">
-  <div class="header"><h2>Rettungsroboter</h2></div>
+  <div class="header"><h2>Roboterarm</h2></div>
   <div class="content">
-    <svg id="robot_svg">
-
-
-    </svg>
-    
+    <img style="height: 60vh;" src="./images/robot_arm.png"/>
   </div>
-
-
-<script>
-    function makeEaseOut(timing) {
-      return function(timeFraction) {
-        return 1 - timing(1 - timeFraction);
-      }
-    }
-
-    function bounce(timeFraction) {
-      for (let a = 0, b = 1; 1; a += b, b /= 2) {
-        if (timeFraction >= (7 - 4 * a) / 11) {
-          return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
-        }
-      }
-    }
-
-    let bounceEaseOut = makeEaseOut(bounce);
-
-    robot_svg.onclick = function() {
-      animate({
-        duration: 3000,
-        timing: bounceEaseOut,
-        draw: function(progress) {
-          brick.style.left = progress * 500 + 'px';
-        }
-      });
-    };
-</script>
-
+   <div class="footer"></div>
 </section>
 
 <section class="slide">
   <div class="header"><h2>Roboterarm</h2></div>
   <div class="content">
     <img style="height: 60vh;" src="./images/robot_arm.png"/>
+  </div>
+   <div class="footer"></div>
+</section>
+
+<section class="slide">
+  <div class="header"><h2>Roboterarm</h2></div>
+  <div class="content">
+    <video controls autoplay loop style="height:60vh">
+      <source src="./videos/robotarm.mp4" type="video/mp4">
+    </video>
   </div>
    <div class="footer"></div>
 </section>
