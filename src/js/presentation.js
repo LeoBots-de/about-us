@@ -4,7 +4,7 @@ import { fullScreenMode, normalScreenMode } from './screen.js';
 
 export class Presentation{
 
-    constructor(){
+    constructor(isLooped=false){
         this.content = document.querySelector('.slides');
         this.slides = this.content.querySelectorAll('section');
         this.currentSlideNo=1;
@@ -12,10 +12,12 @@ export class Presentation{
             this.currentSlideNo = Number(getCookie('currentSlideNo'));
         }
         setCookie('currentSlideNo', this.currentSlideNo);
-        this.totalSlides = 0;
+        this.totalSlidesNo = 0;
         this.currentSlide = null;
+        this.isLooped = isLooped;
         this.updateCurrentSlide();
         this.currentSlide.classList.add('show');
+        this.intervalTimer = null;
         this.addKeylistener(this);
     }
 
@@ -25,11 +27,11 @@ export class Presentation{
     }
 
     updateSlideNo() {
-        this.slideCounter.innerText = `${this.currentSlideNo+1} of ${this.totalSlides}`;
+        this.slideCounter.innerText = `${this.currentSlideNo+1} of ${this.totalSlidesNo}`;
     }
 
     update() {
-        this.totalSlides = this.slides.length;
+        this.totalSlidesNo = this.slides.length;
         this.updateCurrentSlide();
         // this.updateSlideNo();
     }
@@ -42,24 +44,64 @@ export class Presentation{
 
     moveToLeftSlide() {
         if (this.currentSlideNo == 0){
-            return;
+            if (this.isLooped) {
+                this.currentSlideNo = this.totalSlidesNo;
+            } else {
+                return;
+            }
         }
         this.changeCurrentSlideNo(this.currentSlideNo-1);
         this.update();
     }
 
     moveToRightSlide() {
-        if (this.currentSlideNo == this.totalSlides-1){
-            return;
+        if (this.currentSlideNo == this.totalSlidesNo-1){
+            if (this.isLooped) {
+                this.currentSlideNo = -1;
+            } else {
+                return;
+            }
         }
         this.changeCurrentSlideNo(this.currentSlideNo+1);
         this.update();
     }
 
+    switchLooping() {
+        this.isLooped = !this.isLooped;
+        if (this.intervalTimer != null){
+            this.stopAutomation();
+        }
+    }
+
+    startAutomation() {
+        let self = this;
+        this.isLooped = true;
+        this.intervalTimer = window.setInterval(() => {
+                self.moveToRightSlide();
+            }, 
+            4000
+        );
+    }
+
+    stopAutomation(){
+        window.clearInterval(this.intervalTimer);
+        this.intervalTimer = null;
+    }
+
+    automateLoop(){
+        if (this.intervalTimer == null){
+            this.startAutomation();
+        } else {
+            this.stopAutomation();
+        }
+        
+    }
+
+
     addKeylistener(self) {
         document.addEventListener('keydown', function(event){
             let presentation = self;
-            console.log(event.code);
+            //console.log(event.code);
             switch (event.code) {
                 case 'ArrowLeft':
                     presentation.moveToLeftSlide();
@@ -78,6 +120,12 @@ export class Presentation{
                     break;
                 case 'KeyF':
                     fullScreenMode();
+                    break;
+                case 'KeyL':
+                    presentation.switchLooping();
+                    break;
+                case 'KeyA':
+                    presentation.automateLoop();
                     break;
             }
         });
