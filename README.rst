@@ -11,6 +11,7 @@ Controls
     *  "Elscape": exit fullscreen
     *  "A": automate looping (press again to exit)
     *  "L": enable/disable looping (also exits automated looping)
+    *  "T": change between english and german language
 
 
 For more information visit `our webpage <https://leobots.de>`_.

@@ -14,6 +14,12 @@ export class Presentation{
         }
         setCookie('currentSlideNo', this.currentSlideNo);
         this.totalSlidesNo = 0;
+        this.langSelected = 'de';
+        if (getCookie('lang')!=''){
+            this.langSelected = getCookie('lang');
+        }
+        setCookie('lang', this.langSelected);
+
         this.currentSlide = null;
         this.isLooped = isLooped;
         this.updateCurrentSlide();
@@ -23,6 +29,7 @@ export class Presentation{
         this.listener = {};
         this.addKeyListener(this);
         this.addTouchListener(this);
+        this.showLanguage();
     }
 
     updateCurrentSlide() {
@@ -87,6 +94,27 @@ export class Presentation{
         );
     }
 
+    showLanguage() {
+        let languageContent = this.content.querySelectorAll(`.${this.langSelected}`);
+        languageContent.forEach(element => {
+            element.classList.remove('wrong_lang');
+        });
+        setCookie('lang', this.langSelected);
+    }
+
+    switchLanguage() {
+        let languageContent = this.content.querySelectorAll(`.${this.langSelected}`);
+        languageContent.forEach(element => {
+            element.classList.add('wrong_lang');
+        });
+        if (this.langSelected == 'de') {
+            this.langSelected = 'en';
+        } else {
+            this.langSelected = 'de';
+        }
+        this.showLanguage();
+    }
+
     stopAutomation(){
         window.clearInterval(this.intervalTimer);
         this.intervalTimer = null;
@@ -138,6 +166,9 @@ export class Presentation{
                     break;
                 case 'KeyA':
                     presentation.automateLoop();
+                    break;
+                case 'KeyT':
+                    presentation.switchLanguage();
                     break;
             }
         });
